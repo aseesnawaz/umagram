@@ -1,0 +1,11 @@
+  <h3>Create a new Post</h3>
+  <form action="<%= posts_url %>" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+    image: <input type="file" name="post[image]" accept="image/*">
+    <input type="text" name="post[caption]" placeholder="Caption your post">
+
+    <input type="submit" value="upload">
+  </form>
+  <br>
+  <a href="<%= posts_url %>"> < Back to all</a>

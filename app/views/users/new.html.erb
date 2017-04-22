@@ -1,0 +1,15 @@
+<h3 align='center'>UmaGram</h3>
+
+<div align=center>
+<h3>Sign Up</h3>
+
+<form action="<%= users_url %>" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  First Name <input type="text" name="user[firstname]" value="<%= @user.firstname %>">
+  User Name <input type="text" name="user[username]" value="<%= @user.username %>">
+  Email <input type="text" name="user[email]" value="<%= @user.email %>">
+  Password <input type="password" name="user[password]"><br>
+  Profile Picture<input type="file" name="user[avatar]">
+  <input type="submit" name="" value="Sign Up">
+</form>
+</div>

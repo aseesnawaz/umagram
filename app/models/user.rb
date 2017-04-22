@@ -2,6 +2,8 @@ class User < ApplicationRecord
   validates :firstname, :username, :email, :password_digest, :session_token, presence: true
   validates :password, length: {minimum: 6, allow_nil: true}
 
+  mount_uploader :avatar, AvatarUploader
+
   has_many :posts
 
   attr_accessor :password
