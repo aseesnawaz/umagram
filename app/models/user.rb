@@ -5,6 +5,7 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
   has_many :posts
+  has_many :comments
 
   attr_accessor :password
 

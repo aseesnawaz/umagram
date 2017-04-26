@@ -1,0 +1,25 @@
+<!-- header -->
+<div class="header">
+  <!-- <img src="<%= @current_user.avatar_url %>" alt="<%= @current_user.firstname %>" class="header_image"> -->
+  <img src="<%=  image_url('umagra_logo.png') %>" alt="UmaGram" class="logo">
+  <div class="name"> <%= link_to @current_user.firstname, controller: "users", action: "show", id: @current_user.id %><br><%= @current_user.username  %></i></div>
+  <input type="text" name="search" placeholder="Search" class="search_box">
+</div>
+
+<div class="profile-header">
+  <img src="<%= @user.avatar_url %>" class="profile-header-pic">
+  <div class="profile-header-details">
+    <%= @user.firstname %><br>
+    <button type="button" name="button" class="btn"></button><br>
+    <b><%= @user.posts.length %></b>-<i> Posts </i><br>
+    <b><%= @user.followers.length %></b>-<i> Followers </i><br>
+    <b><%= @user.following.length %></b>-<i> Following </i><br>
+  </div>
+</div><br>
+
+
+<div class="user_show_body">
+  <% @posts.each do |post| %>
+  <%= image_tag post.image_url, :class => "user_show_posts"%>
+  <% end %>
+</div>

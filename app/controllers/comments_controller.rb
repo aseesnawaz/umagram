@@ -1,8 +1,8 @@
 class CommentsController < ApplicationController
   def create
-    @comment = Comment.new(comment_params)
-    @comment.save
-    flash.now[:errors] = @comment.errors.full_messages
+    comment = Comment.new(comment_params)
+    comment.save
+    flash.now[:errors] = comment.errors.full_messages
     redirect_to posts_url
   end
 
@@ -17,6 +17,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:body, :post_id)
+    params.require(:comment).permit(:body, :post_id, :user_id)
   end
 end

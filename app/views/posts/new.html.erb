@@ -1,11 +1,20 @@
+
+<div class="header">
+  <img src="<%= @current_user.avatar_url %>" alt="<%= @current_user.firstname %>" class="header_image">
+  <img src="<%=  image_url('umagra_logo.png') %>" alt="UmaGram" class="logo"><div class="name"><%= @current_user.firstname %> <i><br> <%= @current_user.username  %></i></div>
+  <input type="text" name="search" placeholder="Search" class="search_box">
+</div>
+
+<div class="body">
+  <div align="center">
   <h3>Create a new Post</h3>
   <form action="<%= posts_url %>" method="post" enctype="multipart/form-data">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-
     image: <input type="file" name="post[image]" accept="image/*">
-    <input type="text" name="post[caption]" placeholder="Caption your post">
-
-    <input type="submit" value="upload">
+    Caption: <input type="text" name="post[caption]" placeholder="Caption your post"><br><br>
+    <input type="submit" value="upload"></div>
   </form>
   <br>
-  <a href="<%= posts_url %>"> < Back to all</a>
+<h5 align="center"><a href="<%= posts_url %>"> < Back to all</a></h5>
+
+  </div>

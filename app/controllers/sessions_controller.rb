@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       redirect_to posts_url
     else
       flash.now[:errors] = ["Invalid Credentials"]
-      redirect_to root
+      redirect_to new_session_url
     end
   end
 
