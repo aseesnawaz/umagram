@@ -25,6 +25,10 @@ class User < ApplicationRecord
     return @user
   end
 
+  def self.search(search)
+    where("username LIKE ? OR firstname LIKE ?", "%#{search}%", "%#{search}%")
+  end
+
   private
   def ensure_session_token
     self.session_token ||= SecureRandom.urlsafe_base64(16)

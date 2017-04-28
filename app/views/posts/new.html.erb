@@ -1,7 +1,7 @@
 
 <div class="header">
   <img src="<%= @current_user.avatar_url %>" alt="<%= @current_user.firstname %>" class="header_image">
-  <img src="<%=  image_url('umagra_logo.png') %>" alt="UmaGram" class="logo"><div class="name"><%= @current_user.firstname %> <i><br> <%= @current_user.username  %></i></div>
+  <img src="<%=  image_url('umagra_logo.png') %>" alt="UmaGram" class="logo"><div class="header_name"><%= @current_user.firstname %> <i><br> <%= @current_user.username  %></i></div>
   <input type="text" name="search" placeholder="Search" class="search_box">
 </div>
 
@@ -15,6 +15,6 @@
     <input type="submit" value="upload"></div>
   </form>
   <br>
-<h5 align="center"><a href="<%= posts_url %>"> < Back to all</a></h5>
+<h5 align="center"><a href="<%= posts_url %>" class="header_image" style="bottom:0; height:auto; background-color:black; color:white;"> Back to all</a></h5>
 
   </div>

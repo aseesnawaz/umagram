@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <title>Umagram</title>
     <%= csrf_meta_tags %>
 
@@ -10,9 +11,5 @@
 
   <body style="background-color: 	#F8F8FF">
     <%= yield %>
-    <br>
-  <% if !current_page?(new_user_url) && !current_page?(new_session_url) %>
-  <%= button_to "Sign Out", session_url, :method => :delete%>
-  <% end %>
   </body>
 </html>

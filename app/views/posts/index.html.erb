@@ -1,9 +1,20 @@
 <!-- header -->
 <div class="header">
-  <img src="<%= @current_user.avatar_url %>" alt="<%= @current_user.firstname %>" class="header_image">
+  <!-- Create link to create a new post -->
+  <img src="<%= @current_user.avatar_url %>" class="header_image">
+  <a href="<%= new_post_url %>"><label class="header_image", align="center", style="bottom:0; height:auto; background-color:black; color:white;">New Post</a></label>
   <img src="<%=  image_url('umagra_logo.png') %>" alt="UmaGram" class="logo">
-  <div class="name"> <%= link_to @current_user.firstname, controller: "users", action: "show", id: @current_user.id %><br> <%= @current_user.username  %></i></div>
-  <input type="text" name="search" placeholder="Search" class="search_box">
+  <div class="header_name"> <%= link_to @current_user.firstname, controller: "users", action: "show", id: @current_user.id %><br> <i><%= @current_user.username  %></i></div>
+  <%= form_tag(users_url, :method => "get", class: "search_box") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search For Friends", class: "search_box_text" %>
+  <% end %>
+
+  <div><br>
+    <ul style="list-style: none;">
+      <li><%= button_to "Settings", session_url, :method => :delete, :class => "mini-btn"%></li>
+      <li><%= button_to "Log Out", session_url, :method => :delete, :class => "mini-btn"%></li>
+    </ul>
+  </div>
 </div>
 
 <!-- Body -->
@@ -11,32 +22,35 @@
 <% @posts.each do |post| %>
   <% @users.each do |user| %>
     <% if post.user_id == user.id %>
-    <div class="post_user"><img src="<%= user.avatar_url %>" alt="<%= user.firstname %>" class="post_user_photo"><div class="post_user_name"><%= user.firstname-%></div></div>
+    <div class="post_user"><img src="<%= user.avatar_url %>" alt="<%= user.firstname %>" class="post_user_photo"><div class="post_user_name"><%= user.firstname-%>
+      <br><i style="font-size:0.75em;"><%= post.created_at.strftime("%b %d") %>
+      <%= post.created_at.strftime("%H:%M") %></i>
+    </div></div>
     <% end %>
   <% end %>
 
 <!-- Show Image -->
-  <div align="center"><%= image_tag post.image_url, :size => "640x700"%></div>
+  <div align="center"><%= image_tag post.image_url, :size => "540x650"%></div>
   <% if post.user_id == @current_user.id %>
-    <%= button_to "-", post_url(post), method: :delete %>
+    <%= button_to "Delete", post_url(post), method: :delete, style: "width: 45px; border:1px dashed; float: right; background: white; margin-right: 1px;" %>
   <% end %>
 <!-- Image Bottom portion -->
 
 <div class="image_bottom">
-  <%= post.caption %><br>
-  <%= post.likes.nil? ? 0 : post.likes %> <i>likes</i><br>
+  <%= post.caption %>  <i style="float:right, margin: 0 auto;"><br><%= post.likes.nil? ? 0 : post.likes %> likes</i><br>
+  <%= button_to "Like", style: "border:1px dashed; float: left; background: white; margin-right: 1px;"-%><br>
 
 <!-- Show Comments -->
   <% @comments.each do |comment| %>
     <% if comment.post_id == post.id %>
     <% @users.each do |user| %>
       <% if comment.user_id == user.id %>
-      <div class="post_user_name" style="display:inline"><%= user.firstname-%> - </div> <%= comment.body %><br>
+        <% if comment.user_id == @current_user.id%>
+          <%= button_to "-", post_url(post), method: :delete, style: "width: auto; border:1px dashed; float: left; background: white; margin-right: 1px;" %>
+        <% end %>
+      <div class="post_user_name" style="display:inline"><%= user.firstname-%> - </div> <%= comment.body %><br><br>
       <% end %>
     <% end %>
-      <% if comment.user_id == @current_user.id%>
-        <%= button_to "-", comment_url(comment), method: :delete -%>
-      <% end %>
     <% end %>
   <% end %>
 </div>
@@ -52,7 +66,4 @@
   <!-- Add Breaker after every post -->
   <hr>
 <% end %>
-<br>
-<!-- Create link to create a new post -->
-<h4 align=center><a href="<%= new_post_url %>">Create a new Post</a></h4>
 </div>

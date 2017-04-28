@@ -1,19 +1,25 @@
 <!-- header -->
 <div class="header">
-  <!-- <img src="<%= @current_user.avatar_url %>" alt="<%= @current_user.firstname %>" class="header_image"> -->
+  <img src="<%= @current_user.avatar_url %>" alt="<%= @current_user.firstname %>" class="header_image">
   <img src="<%=  image_url('umagra_logo.png') %>" alt="UmaGram" class="logo">
-  <div class="name"> <%= link_to @current_user.firstname, controller: "users", action: "show", id: @current_user.id %><br><%= @current_user.username  %></i></div>
+  <div class="header_name"> <%= @current_user.firstname %><br><i><%= @current_user.username  %></i></div>
   <input type="text" name="search" placeholder="Search" class="search_box">
+  <div><br>
+    <ul style="list-style: none;">
+      <li><%= button_to "Settings", user_url, :method => :update, :class => "mini-btn"%></li>
+      <li><%= button_to "Log Out", session_url, :method => :delete, :class => "mini-btn"%></li>
+    </ul>
+  </div>
 </div>
 
 <div class="profile-header">
   <img src="<%= @user.avatar_url %>" class="profile-header-pic">
   <div class="profile-header-details">
-    <%= @user.firstname %><br>
-    <button type="button" name="button" class="btn"></button><br>
-    <b><%= @user.posts.length %></b>-<i> Posts </i><br>
-    <b><%= @user.followers.length %></b>-<i> Followers </i><br>
-    <b><%= @user.following.length %></b>-<i> Following </i><br>
+    <div style="font-size:1.2em;"><%= @user.firstname %><br></div>
+    <button type="button" name="button" class="button" onclick="">Follow</button><br>
+    <b><%= @user.posts.length %></b><i style="font-size:.8em;"> Posts </i><br>
+    <b><%= @user.followers.length %></b><i style="font-size:.8em;"> Followers </i><br>
+    <b><%= @user.following.length %></b><i style="font-size:.8em;"> Following </i><br>
   </div>
 </div><br>
 
