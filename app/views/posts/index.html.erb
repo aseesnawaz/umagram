@@ -10,8 +10,7 @@
   <% end %>
 
   <div><br>
-    <ul style="list-style: none;">
-      <li><%= button_to "Settings", session_url, :method => :delete, :class => "mini-btn"%></li>
+    <ul style="list-style: none;"><br>
       <li><%= button_to "Log Out", session_url, :method => :delete, :class => "mini-btn"%></li>
     </ul>
   </div>
@@ -22,7 +21,7 @@
 <% @posts.each do |post| %>
   <% @users.each do |user| %>
     <% if post.user_id == user.id %>
-    <div class="post_user"><img src="<%= user.avatar_url %>" alt="<%= user.firstname %>" class="post_user_photo"><div class="post_user_name"><%= user.firstname-%>
+    <div class="post_user"><img src="<%= user.avatar_url %>" alt="<%= user.firstname %>" class="post_user_photo"><div class="post_user_name"><%= link_to user.firstname, controller: "users", action: "show", id: user.id %>
       <br><i style="font-size:0.75em;"><%= post.created_at.strftime("%b %d") %>
       <%= post.created_at.strftime("%H:%M") %></i>
     </div></div>
@@ -38,9 +37,39 @@
 
 <div class="image_bottom">
   <%= post.caption %>  <i style="float:right, margin: 0 auto;"><br><%= post.likes.nil? ? 0 : post.likes %> likes</i><br>
-  <%= button_to "Like", style: "border:1px dashed; float: left; background: white; margin-right: 1px;"-%><br>
+  <form action="<%= post_url(post) %>" method="post" name="id" id="like_button">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="put">
+    <input type="submit" value="like">
+  </form>
 
 <!-- Show Comments -->
+
+
+
+<!-- AJAX WAY OF FORM -->
+  <!-- <div class="commentsection">
+    <ul id="comment-list">
+      <% @comments.each do |comment| %>
+      <li>
+        <%= comment.body %>
+      </li>
+      <% end %>
+    </ul>
+
+    <form action="/comments" method="post">
+      <input type="hidden" name="authenticity_token" id="" value="<%= form_authenticity_token %>" />
+      <input type="text" name="comment[body]" id="" value=""/>
+      <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
+      <input type="hidden" name="comment[user_id]" value="<%= @current_user.id %>">
+      <input type="submit" name="" id="" value="Add Comment" />
+    </form>
+
+  </div> -->
+
+
+
+
   <% @comments.each do |comment| %>
     <% if comment.post_id == post.id %>
     <% @users.each do |user| %>
@@ -48,15 +77,18 @@
         <% if comment.user_id == @current_user.id%>
           <%= button_to "-", post_url(post), method: :delete, style: "width: auto; border:1px dashed; float: left; background: white; margin-right: 1px;" %>
         <% end %>
-      <div class="post_user_name" style="display:inline"><%= user.firstname-%> - </div> <%= comment.body %><br><br>
+      <div class="post_user_name" style="display:inline"><%= user.firstname-%> - </div> <%= comment.body %> (
+      <i style="font-size:0.75em;"><%= comment.created_at.strftime("%b %d") %>
+      <%= comment.created_at.strftime("%H:%M") %></i>)<br><br>
       <% end %>
     <% end %>
     <% end %>
   <% end %>
 </div>
 <!-- Get a new comment -->
-  <form action="<%= comments_url %>" method="post">
-    <input type="text" name="comment[body]" placeholder="Add an comment" class="create_comment">
+  <form action="<%= comments_url %>" method="post" id="comment_form">
+  <form id="comment_form">
+    <input type="text" name="comment[body]" placeholder="Add an comment" class="create_comment" >
     <input type="hidden" name="comment[post_id]" value="<%= post.id %>">
     <input type="hidden" name="comment[user_id]" value="<%= @current_user.id %>">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">

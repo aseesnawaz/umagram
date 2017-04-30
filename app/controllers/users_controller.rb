@@ -44,7 +44,12 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    user.update(user_params)
+    @current_user ||= User.find_by_session_token(session[:session_token])
+    @current_user.follow(@user)
+    @user.followings(@current_user)
+    @user.save!
+    @current_user.save!
+    redirect_to user_url(@user)
   end
 
   private

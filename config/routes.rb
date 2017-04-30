@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   root to: "sessions#new"
   resources :users
   resources :posts
-  resources :comments, only: [:create, :update, :destroy]
+  resources :comments
   resource :session, only: [:new, :create, :destroy]
 end

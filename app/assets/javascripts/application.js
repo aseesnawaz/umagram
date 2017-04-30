@@ -14,3 +14,60 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).on({
+    dblclick: function () {
+      $(this).css({
+        width: "600px",
+        height: "600px",
+        opacity: 1,
+      });
+    },
+
+    click: function () {
+      $(this).css({
+        width: "300px",
+        height: "300px",
+      });
+    }
+}, '#myImg');
+
+$(document).ready(function(){
+  $("#guest_button").click(function(){
+      document.getElementById('un').value = 'guest17';
+      document.getElementById('pass').value = 'sheepk495';
+      document.forms[0].submit()
+  });
+});
+
+
+
+
+var commentMachine = function($el){
+  this.$comments = $el.find('ul');
+  this.$form = $el.find('form');
+  this.$form.on('submit', this.submitComment.bind(this));
+};
+
+commentMachine.prototype.submitComment = function (e) {
+  e.preventDefault();
+  $.ajax({
+    method: 'POST',
+    url: '/comments',
+    dataType: 'json',
+    data: this.$form.serialize(),
+    success: function(comment){
+      this.addComment(comment);
+      this.clearForm();
+    }.bind(this)
+  });
+};
+
+commentMachine.prototype.addComment = function (comment) {
+  var $comment = $('<li>').text(comment.body);
+  this.$comments.append($comment);
+};
+
+commentMachine.prototype.clearForm = function () {
+  this.$form.find("input[type='text']").val("");
+};

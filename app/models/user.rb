@@ -29,6 +29,14 @@ class User < ApplicationRecord
     where("username LIKE ? OR firstname LIKE ?", "%#{search}%", "%#{search}%")
   end
 
+  def follow(user)
+    user.followers.push(self.id)
+  end
+
+  def followings(user)
+    user.following.push(self.id)
+  end
+
   private
   def ensure_session_token
     self.session_token ||= SecureRandom.urlsafe_base64(16)

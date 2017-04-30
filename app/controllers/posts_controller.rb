@@ -4,6 +4,13 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
+  def update
+    @post = Post.find(params[:id])
+    if @post.like(params[:user_id])
+      redirect_to posts_url
+    end
+  end
+
   def create
     post = Post.new
     post.user_id = @current_user.id

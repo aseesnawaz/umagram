@@ -6,7 +6,6 @@
   <input type="text" name="search" placeholder="Search" class="search_box">
   <div><br>
     <ul style="list-style: none;">
-      <li><%= button_to "Settings", user_url, :method => :update, :class => "mini-btn"%></li>
       <li><%= button_to "Log Out", session_url, :method => :delete, :class => "mini-btn"%></li>
     </ul>
   </div>
@@ -16,16 +15,26 @@
   <img src="<%= @user.avatar_url %>" class="profile-header-pic">
   <div class="profile-header-details">
     <div style="font-size:1.2em;"><%= @user.firstname %><br></div>
-    <button type="button" name="button" class="button" onclick="">Follow</button><br>
+    <% if @user.followers.include?(@current_user.id) %>
+      <button type="button" class="button">Following</button>
+    <% else %>
+    <form action="<%= user_url(@user) %>" method="post">
+      <input type="hidden" name="_method" value="put">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="id" value="<%= @user.id %>">
+      <input type="submit" value="Follow" class="button">
+    </form>
+    <% end %><br>
     <b><%= @user.posts.length %></b><i style="font-size:.8em;"> Posts </i><br>
     <b><%= @user.followers.length %></b><i style="font-size:.8em;"> Followers </i><br>
     <b><%= @user.following.length %></b><i style="font-size:.8em;"> Following </i><br>
   </div>
 </div><br>
 
-
 <div class="user_show_body">
   <% @posts.each do |post| %>
-  <%= image_tag post.image_url, :class => "user_show_posts"%>
+  <img id="myImg" src="<%= post.image_url %>" alt="Trolltunga, Norway" class="user_show_posts">
   <% end %>
+  <h4 align="center"><i>**double click to enlarge an image and single click to reduce it**<i/></h4>
+<h5 align="center"><a href="<%= posts_url %>" class="header_image" style="bottom:0; height:auto; background-color:black; color:white;"> Back to all</a></h5>
 </div>
